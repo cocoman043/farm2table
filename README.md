@@ -1,7 +1,7 @@
 <h1 align="center">
   <img width="200" src="https://img.freepik.com/premium-vector/agriculture-ecommerce-logo-design_406229-4.jpg?w=826">
   <br>
-  Farm to Table
+  Farm to Table [WIP]
   <br>
 </h1>
 
