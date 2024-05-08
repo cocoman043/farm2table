@@ -27,7 +27,7 @@ npm start
 ```
 3. Start the backend
 ```bash
-cd farm2table/api
+cd farm2table/server
 npm i
 npm start
 ```
