@@ -17,7 +17,7 @@
 
 1. Clone the project
 ```bash
-git clone
+git clone https://github.com/cocoman043/farm2table.git
 ```
 2. Start the frontend
 ```bash
