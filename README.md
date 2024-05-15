@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img width="200" src="https://img.freepik.com/premium-vector/agriculture-ecommerce-logo-design_406229-4.jpg?w=826">
+  <img width="200" src="https://github.com/cocoman043/farm2table/assets/129296131/79d93e7f-c18f-4d39-acf8-31bfd5fa9334">
   <br>
   Farm to Table [WIP]
   <br>
