@@ -1,4 +1,4 @@
-import ErrorCard from "./pages/ErrorCard";
+import ErrorCard from "./components/ErrorCard";
 
 function App() {
   return (
