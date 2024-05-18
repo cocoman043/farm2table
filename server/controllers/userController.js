@@ -1,28 +1,29 @@
 import User from '../models/User.js';
 
 const getUser = async (req, res) => {
-  // TODO:
-
+  const user = await User.findById(req.params.id);
+  res.send(user);
 };
 
 const getUsers = async (req, res) => {
-  // TODO:
-
+  const users = await User.find();
+  res.send(users);
 };
 
 const postUser = async (req, res) => {
-  // TODO:
-
+  const newUser = new User(req.body);
+  await newUser.save();
+  res.send(newUser);
 };
 
 const putUser = async (req, res) => {
-  // TODO:
-
+  const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+  res.send(user);
 };
 
 const deleteUser = async (req, res) => {
-  // TODO:
-
+  await User.findByIdAndDelete(req.params.id);
+  res.send('User deleted successfully');
 };
 
 export {
