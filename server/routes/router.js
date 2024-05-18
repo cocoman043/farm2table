@@ -32,12 +32,14 @@ const router = new express.Router();
 
 router.get('/order', getOrders);
 router.get('/order/:id', getOrder);
-router.post('/order/:id', postOrder);
+router.post('/order', postOrder);
+router.put('/order', postOrder);
 router.delete('/order/:id', deleteOrder);
 
 router.get('/transation', getTransactions);
 router.get('/transaction/:id', getTransaction);
-router.post('/transaction/:id', postTransaction);
+router.post('/transaction', postTransaction);
+router.put('/transaction', postTransaction); // WARN: MIGHT NOT BE NEEDED
 router.delete('/transaction/:id', deleteTransaction);
 
 router.get('/product', getProducts);
