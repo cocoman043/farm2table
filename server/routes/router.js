@@ -32,7 +32,8 @@ const router = new express.Router();
 
 router.get('/order', getOrders);
 router.get('/order/:id', getOrder);
-router.post('/order/:id', postOrder);
+router.post('/order', postOrder);
+router.put('/order', postOrder);
 router.delete('/order/:id', deleteOrder);
 
 router.get('/transation', getTransactions);
