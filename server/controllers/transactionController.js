@@ -75,11 +75,11 @@ const postTransaction = async (req, res) => {
     //  product_id,
     //  order_id
     // }, { withCredentials: true })
-    const { product_id, order_id } = req.body;
+    const { product_id, quantity, order_id } = req.body;
 
     // instead of creating a new transaction using `new Order`, and then saving with order.save(),
     // transaction.create does both in one line
-    const transaction = await Transaction.create({ product_id, order_id });
+    const transaction = await Transaction.create({ product_id, quantity, order_id });
 
     if (transaction) {
       // TODO: check the response if transaction is returned
@@ -93,7 +93,8 @@ const postTransaction = async (req, res) => {
 // WARN: this endpoint may not be used since we might not need to update transactions
 const putTransaction = async (req, res) => {
   try {
-    const { id, quantity } = req.body;
+    const { id } = req.params;
+    const { quantity } = req.body;
 
     // find the transaction using the id, and the new status
     // use {new:true} option to return the updated transaction instead of the old
@@ -111,13 +112,17 @@ const putTransaction = async (req, res) => {
 
 const deleteTransaction = async (req, res) => {
   try {
-    const { id } = req.body;
+    const { id } = req.params;
 
     const transaction = await Transaction.findByIdAndDelete(id);
 
-    console.log(transaction);
+    if (transaction) {
+      res.status(200).json({ transaction, message: 'successfully deleted transaction.' });
+    } else {
+      res.status(200).json({ message: 'failed to find transaction.' });
+    }
   } catch (error) {
-    res.send(500).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 

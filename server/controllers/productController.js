@@ -1,4 +1,4 @@
-// import Product from '../models/Product.js';
+import Product from '../models/Product.js';
 
 const getProduct = async (req, res) => {
   const product = await Product.findOne({ code: req.query.name })

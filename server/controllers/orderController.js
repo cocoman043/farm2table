@@ -101,7 +101,8 @@ const postOrder = async (req, res) => {
 // PUT /order
 const putOrder = async (req, res) => {
   try {
-    const { id, status } = req.body;
+    const { id } = req.params;
+    const { status } = req.body;
 
     // find the order using the id, and the new status
     // use {new:true} option to return the updated order instead of the old
@@ -120,13 +121,18 @@ const putOrder = async (req, res) => {
 // DELETE /order/:id
 const deleteOrder = async (req, res) => {
   try {
-    const { id } = req.body;
+    const { id } = req.params;
 
     const order = await Order.findByIdAndDelete(id);
 
-    console.log(order);
+
+    if (order) {
+      res.status(200).json({ order, message: 'successfully deleted order.' });
+    } else {
+      res.status(200).json({ message: 'failed to find order.' });
+    }
   } catch (error) {
-    res.send(500).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
