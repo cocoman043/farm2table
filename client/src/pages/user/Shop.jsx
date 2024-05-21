@@ -6,7 +6,7 @@ function Shop() {
     const [products, setProducts] = useState([
         {
             name: "Talong",
-            desciption: "Sariwa't mahahaba, bagong ani",
+            description: "Sariwa't mahahaba, bagong ani",
             type: "crop",
             price: 20.00,
             stock: 10,
@@ -14,7 +14,7 @@ function Shop() {
         },
         {
             name: "Kamatis",
-            desciption: "Sariwa't matatambok, bagong ani",
+            description: "Sariwa't matatambok, bagong ani",
             type: "crop",
             price: 7.00,
             stock: 20,
@@ -22,7 +22,7 @@ function Shop() {
         },
         {
             name: "Sibuyas",
-            desciption: "Sariwa't matitigas, bagong ani",
+            description: "Sariwa't matitigas, bagong ani",
             type: "crop",
             price: 20.00,
             stock: 5,
@@ -30,7 +30,7 @@ function Shop() {
         },
         {
             name: "Manok",
-            desciption: "Bagong katay",
+            description: "Bagong katay",
             type: "poultry item",
             price: 120.00,
             stock: 20,
@@ -38,7 +38,7 @@ function Shop() {
         },
         {
             name: "Grower",
-            desciption: "Mainam na patuka sa mga lumalaking manok asdsdsdsdsdsdsdsdsdsdsdsdasdasdasdasdasdasdasdasdasdasdasdasdasd",
+            description: "Mainam na patuka sa mga lumalaking manok asdsdsdsdsdsdsdsdsdsdsdsdasdasdasdasdasdasdasdasdasdasdasdasdasd",
             type: "poultry item",
             price: 80.00,
             stock: 15,
@@ -50,34 +50,36 @@ function Shop() {
 
     function addToCart(product) {
         setCarts(prevCarts => {
+            console.log("add")
             const newCarts = { ...prevCarts };
+            const item = { ...newCarts[product.name] };
+
             if (newCarts.hasOwnProperty(product.name)) {
-                newCarts[product.name] += 1;
+                newCarts[product.name] = { unitprice: product.price, quantity: item.quantity + 1, total: item.total + product.price }
             } else {
-                newCarts[product.name] = 1;
+                newCarts[product.name] = { unitprice: product.price, quantity: 1, total: product.price};
             }
             return newCarts;
         });
-
-        console.log(carts);
     }
 
     function editCart(cart, edit) {
         setCarts(prevCarts => {
+            console.log("edit")
             const newCarts = { ...prevCarts };
+            const item = { ...newCarts[cart] };
+
             if (edit == "-") {
-                if(newCarts[cart] == 1) {
+                if(newCarts[cart].quantity == 1) {
                     delete newCarts[cart]
                 } else {
-                    newCarts[cart] -= 1;
+                    newCarts[cart] = { unitprice: item.unitprice, quantity: item.quantity - 1, total: item.total - item.unitprice }
                 }
             } else {
-                newCarts[cart] += 1;
+                newCarts[cart] = { unitprice: item.unitprice, quantity: item.quantity + 1, total: item.total + item.unitprice }
             }
             return newCarts;
         });
-
-        console.log(carts);
     }
 
     return (
@@ -93,17 +95,17 @@ function Shop() {
 
                             {products.map((product, index) => {
                                 return(
-                                    <ProductCard key={index} product={product} add={addToCart}/>
+                                    <ProductCard key={index} product={product} add={() => addToCart(product)}/>
                                 )
                             })}
                     
                         </div>
                     </div>
 
-                    <div className="p-3 min-w-[450px] flex flex-col gap-5">
+                    <div className="p-3 min-w-fit flex flex-col gap-5">
                         <h1 className="font-inter font-bold text-4xl">Cart</h1>
 
-                        <div className="shadow-xl border-4 border-farmgreen rounded-2xl overflow-x-auto">
+                        <div className="shadow-xl border-4 border-farmgreen rounded-2xl overflow-hidden">
                             <table className="table font-inter">
                                 {/* head */}
                                 <thead className="h-14 bg-farmgreen font-semibold text-black text-xl">
@@ -114,40 +116,41 @@ function Shop() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                {/* row 1 */}
+
                                 {JSON.stringify(carts) == '{}' 
                                     ? 
                                         <tr className="h-14">
-                                            <td>No items</td>
+                                            <td></td>
+                                            <td className="p-4 flex justify-center"><p>No items</p></td>
+                                            <td></td>
                                         </tr> 
                                     :
-                                        Object.keys(carts).map((cart) => {
+                                        Object.keys(carts).map((cart, index) => {
                                             return(
-                                                <tr className="h-14">
-                                                    <td>{cart}</td>
-                                                    <td>
+                                                <tr key={index} className="h-14">
+                                                    <td className="px-4 max-w-36 truncate">{cart}</td>
+                                                    <td className="px-4">
                                                         <div className="w-fit h-10 border-2 border-gray-300 rounded-2xl overflow-hidden flex items-center">
-                                                            <div className="flex-1 w-10 border-r-2 border-r-gray-300 overflow-hidden flex justify-center">
+                                                            <div className="w-10 border-r-2 border-r-gray-300 overflow-hidden flex justify-center">
                                                                 <button className="btn btn-square bg-white rounded-none text-lg" onClick={() => editCart(cart, "-")}>
                                                                     -
                                                                 </button>
                                                             </div>
-                                                            <div className="flex-none w-10 overflow-hidden flex justify-center">
-                                                                {carts[cart]}
+                                                            <div className="w-10 overflow-hidden flex justify-center">
+                                                                {carts[cart].quantity}
                                                             </div>
-                                                            <div className="flex-none w-10 border-l-2 border-l-gray-300 overflow-hidden flex justify-center">
+                                                            <div className="w-10 border-l-2 border-l-gray-300 overflow-hidden flex justify-center">
                                                                 <button className="btn btn-square bg-white rounded-none text-lg" onClick={() => editCart(cart, "+")}>
                                                                     +
                                                                 </button>
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td>Blue</td>
+                                                    <td className="px-4 font-bold text-lg">₱{carts[cart].total.toFixed(2)}</td>
                                                 </tr>
                                             )
                                         })}
                                 
-
                                 </tbody>
                             </table>
                         </div>
