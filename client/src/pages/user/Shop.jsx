@@ -1,5 +1,3 @@
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faWarning } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import Navbar from "../../components/Navbar"
 import ProductCard from "../../components/ProductCard"
@@ -93,9 +91,9 @@ function Shop() {
 
                         <div className="p-3 shadow-xl border-4 border-farmgreen rounded-2xl overflow-hidden grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-5">
 
-                            {products.map((product) => {
+                            {products.map((product, index) => {
                                 return(
-                                    <ProductCard product={product} add={addToCart}/>
+                                    <ProductCard key={index} product={product} add={addToCart}/>
                                 )
                             })}
                     
