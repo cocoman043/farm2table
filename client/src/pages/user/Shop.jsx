@@ -1,5 +1,6 @@
 import { useState } from "react";
-import Navbar from "../../components/Navbar"
+import { FaShoppingCart } from "react-icons/fa";
+import Navbar from "../../components/UserNavbar"
 import ProductCard from "../../components/ProductCard"
 
 function Shop() {
@@ -50,7 +51,6 @@ function Shop() {
 
     function addToCart(product) {
         setCarts(prevCarts => {
-            console.log("add")
             const newCarts = { ...prevCarts };
             const item = { ...newCarts[product.name] };
 
@@ -65,7 +65,6 @@ function Shop() {
 
     function editCart(cart, edit) {
         setCarts(prevCarts => {
-            console.log("edit")
             const newCarts = { ...prevCarts };
             const item = { ...newCarts[cart] };
 
@@ -80,6 +79,10 @@ function Shop() {
             }
             return newCarts;
         });
+    }
+
+    function checkout() {
+        setCarts({});
     }
 
     return (
@@ -102,7 +105,7 @@ function Shop() {
                         </div>
                     </div>
 
-                    <div className="p-3 min-w-fit flex flex-col gap-5">
+                    <div className="p-3 min-w-[450px] flex flex-col gap-5">
                         <h1 className="font-inter font-bold text-4xl">Cart</h1>
 
                         <div className="shadow-xl border-4 border-farmgreen rounded-2xl overflow-hidden">
@@ -154,6 +157,11 @@ function Shop() {
                                 </tbody>
                             </table>
                         </div>
+
+                        <button className="btn bg-farmgreen rounded-2xl text-lg text-white hover:bg-farmgreen" onClick={() => checkout()}>
+                            <FaShoppingCart />
+                            Checkout
+                        </button>
                     </div>
                 </div>
             </div>
