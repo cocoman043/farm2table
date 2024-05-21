@@ -32,6 +32,11 @@ import {
   deleteUser,
 } from '../controllers/userController.js';
 
+import {
+  register,
+  login,
+} from '../controllers/authController.js';
+
 const router = new express.Router();
 
 router.get('/order', getOrders);
@@ -57,5 +62,8 @@ router.get('/user/:id', getUser);
 router.post('/user', postUser);
 router.put('/user/:id', putUser); // WARN: MIGHT NOT BE NEEDED
 router.delete('/user/:id', deleteUser);
+
+router.post("/register", register);
+router.post("/login", login);
 
 export default router;
