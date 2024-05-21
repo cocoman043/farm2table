@@ -2,6 +2,7 @@
 // import { faWarning } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import Navbar from "../../components/Navbar"
+import ProductCard from "../../components/ProductCard"
 
 function Shop() {
     const [products, setProducts] = useState([
@@ -94,16 +95,7 @@ function Shop() {
 
                             {products.map((product) => {
                                 return(
-                                    <div className="flex-1 card card-compact bg-base-100 shadow-xl">
-                                        <figure className="min-h-48 max-h-48 object-contain"><img src={product.img} alt={product.name}/></figure>
-                                        <div className="card-body min-h-40 max-h-40">
-                                            <h2 className="card-title">{product.name}</h2>
-                                            <p className="min-h-8 max-h-8 text-ellipsis overflow-hidden">{product.desciption}</p>
-                                            <div className="card-actions justify-end">
-                                                <button className="btn btn-primary" onClick={() => addToCart(product)}>Add to Cart</button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <ProductCard product={product} add={addToCart}/>
                                 )
                             })}
                     
