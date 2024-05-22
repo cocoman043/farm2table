@@ -47,8 +47,8 @@ const getOrders = async (req, res) => {
 
     console.log(filter)
 
-    // find the orders based on the filter
-    const orders = await Order.find(filter);
+    // find the orders based on the filter, ordered by status (descending kaya may -1)
+    const orders = await Order.find(filter).sort({ status: -1 });
 
     if (orders) {
       res.status(200).json(orders);

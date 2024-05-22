@@ -1,6 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ErrorCard from "./components/ErrorCard";
+// import Table from "./components/Table";
+// import ManageOrders from "./pages/ManageOrders";
+// import TransactionCard from "./components/Transaction";
 
 import Register from "./pages/Register";
 import Login from "./pages/Login";
@@ -16,7 +19,7 @@ import SalesReport from "./pages/admin/SalesReport";
 function App() {
   return (
     <>
-      <div className="flex p-8 w-screen justify-center h-screen items-center">
+      <div className="flex from-sky-500 to-indigo-500 p-8 w-screen justify-center h-screen items-center">
         <Router>
           <Routes>
             <Route path="*" element={<ErrorCard />} />
