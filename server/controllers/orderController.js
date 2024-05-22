@@ -45,8 +45,6 @@ const getOrders = async (req, res) => {
       filter.status = status;
     }
 
-    console.log(filter)
-
     // find the orders based on the filter, ordered by status (descending kaya may -1)
     const orders = await Order.find(filter).sort({ status: -1 });
 

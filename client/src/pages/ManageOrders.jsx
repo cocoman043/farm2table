@@ -20,9 +20,8 @@ function ManageOrders() {
   }, []);
 
   return (
-    <div>
+    <div className="w-fit justify-center items-center">
       <Table tableData={tableData} />
-      <TransactionCard />
     </div>
   )
 };

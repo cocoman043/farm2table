@@ -39,8 +39,6 @@ const getTransactions = async (req, res) => {
     if (product_id) filter.product_id = product_id;
     if (order_id) filter.order_id = order_id;
 
-    console.log(filter)
-
     // find the transactions based on the filter
     const transactions = await Transaction.find(filter);
 
