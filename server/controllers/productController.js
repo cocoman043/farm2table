@@ -12,7 +12,7 @@ const getProduct = async (req, res) => {
     // else, return a message
     if (product) {
       // res.json is used since order is of type Object
-      res.status(200).json(order);
+      res.status(200).json(product);
     } else {
       res.status(200).json({ message: 'Product not found.' });
     }
@@ -85,13 +85,13 @@ const postProduct = async (req, res) => {
 const putProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const { newProduct } = req.body;
+    const { name, description, type, price, stock } = req.body;
 
     // find the product using the id, and the new product
-    const product = await Product.findOneAndReplace(id, { newProduct });
+    const product = await Product.findOneAndReplace(id, { name, description, type, price, stock });
 
     if (product) {
-      res.status(200).json(order);
+      res.status(200).json(product);
     } else {
       res.status(200).json({ message: 'Product not found.' });
     }
