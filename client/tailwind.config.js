@@ -7,7 +7,11 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'custom-pattern': "url('./public/black.svg')",
+      }
+    },
   },
   plugins: [
     daisyui
