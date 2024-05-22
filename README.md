@@ -34,11 +34,11 @@ git clone https://github.com/cocoman043/farm2table.git
 ```bash
 cd farm2table/client
 npm i
-npm start
+npm run dev
 ```
 3. Start the backend
 ```bash
 cd farm2table/server
 npm i
-npm start
+npm run dev
 ```
