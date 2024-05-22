@@ -15,11 +15,12 @@ import AdminProductList from "./pages/admin/AdminProductList";
 import UserManagement from "./pages/admin/UserManagement";
 import OrderManagement from "./pages/admin/OrderManagement";
 import SalesReport from "./pages/admin/SalesReport";
+import Shop from "./pages/user/Shop";
 
 function App() {
   return (
     <>
-      <div className="flex from-sky-500 to-indigo-500 p-8 w-screen justify-center h-screen items-center">
+      {/* <div className="flex p-8 w-screen justify-center h-screen items-center"> */}
         <Router>
           <Routes>
             <Route path="*" element={<ErrorCard />} />
@@ -36,7 +37,7 @@ function App() {
             <Route path="/admin/sales" component={<SalesReport />} />
           </Routes>
         </Router>
-      </div>
+      {/* </div> */}
     </>
   );
 }

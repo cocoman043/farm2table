@@ -1,4 +1,5 @@
 import daisyui from 'daisyui';
+const defaultTheme = require('tailwindcss/defaultTheme')
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -8,8 +9,11 @@ export default {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        'custom-pattern': "url('./public/black.svg')",
+      colors: {
+        farmgreen: "#ABE188"
+      },
+      fontFamily: {
+        'inter': ['"Inter"', ...defaultTheme.fontFamily.sans]
       }
     },
   },
