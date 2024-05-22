@@ -60,11 +60,11 @@ const getProducts = async (req, res) => {
 const postProduct = async (req, res) => {
   try {
     const { name, description, type, price, stock } = req.body
-    
-    const newProduct = new Product.create({ name, description, type, price, stock })
-    
+
+    const newProduct = Product.create({ name, description, type, price, stock })
+
     if (newProduct) {
-      res.status(200).json(order);
+      res.status(200).json(newProduct);
     }
   } catch (error) {
     res.status(500).json({ error: error.message })
@@ -119,7 +119,7 @@ const deleteProduct = async (req, res) => {
     const product = await Product.findByIdAndDelete(id);
 
     if (product) {
-      res.status(200).json({ order, message: 'successfully deleted product.' });
+      res.status(200).json({ product, message: 'successfully deleted product.' });
     } else {
       res.status(200).json({ message: 'Product not found.' });
     }
