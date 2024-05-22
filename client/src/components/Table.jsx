@@ -2,22 +2,38 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import StatusBadge from "./StatusBadge";
 import CancelButton from "./CancelButton";
+import ConfirmButton from "./ConfirmButton";
 
-function Table({ tableData }) {
+function Table({ tableData, setTableData, setTransactions, isAdmin }) {
 
-  const previewOrder = async () => {
-    // TODO:
+  const previewOrder = async (order_id) => {
+    try {
+      console.log(order_id);
+      const response = await fetch(`http://localhost:3000/transaction?order_id=${order_id}`);
+      const updatedTransactions = await response.json();
 
-    console.log('Insert order preview here');
+      console.log('updated Transactions:')
+      console.log(updatedTransactions);
+
+      setTransactions(updatedTransactions);
+    } catch (error) {
+      console.error(`An error occurred while fetching the transactions: ${error.message}`);
+    }
+  };
+
+  const updateTableData = (id) => {
+    setTableData((prevData) => prevData.map((order) =>
+      order._id === id ? { ...order, status: 'cancelled' } : order
+    ));
   };
 
   return (
-    <div className="max-h-96 rounded-3xl overflow-auto">
-      <table className="bg-white text-neutral">
-        <thead className="bg-green-300 rounded-3xl sticky top-0">
+    <div className="h-max card overflow-auto border-4 border-farmgreen">
+      < table className="bg-white text-neutral" >
+        <thead className="bg-farmgreen rounded-3xl sticky top-0">
           <tr className="*:text-left *:p-4 *:text-xl">
-            <th>Id</th>
-            <th>Date</th>
+            <th>Order ID</th>
+            <th>Date Ordered</th>
             <th>Status</th>
             {/* additional columns for cancel and preview button */}
             <th></th>
@@ -39,11 +55,14 @@ function Table({ tableData }) {
                   <StatusBadge status={data.status} />
                 </td>
                 <td>
-                  <CancelButton id={data._id} status={data.status} />
+                  {!isAdmin && <CancelButton id={data._id} status={data.status} updateTableData={updateTableData} />}
+                  {isAdmin && <ConfirmButton id={data._id} status={data.status} updateTableData={updateTableData} />}
                 </td>
                 <td>
-                  <button onClick={previewOrder}>
-                    <FontAwesomeIcon icon={faAngleRight} />
+                  <button onClick={() => previewOrder(data._id)}>
+                    <div className="hover:bg-neutral-300 btn-circle justify-center items-center flex">
+                      <FontAwesomeIcon icon={faAngleRight} />
+                    </div>
                   </button>
                 </td>
               </tr>
@@ -51,8 +70,8 @@ function Table({ tableData }) {
           }
           )}
         </tbody>
-      </table>
-    </div>
+      </table >
+    </div >
   )
 }
 
