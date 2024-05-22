@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ErrorCard from "./components/ErrorCard";
 // import Table from "./components/Table";
-// import ManageOrders from "./pages/ManageOrders";
+import ManageOrders from "./pages/ManageOrders";
 // import TransactionCard from "./components/Transaction";
 
 import Register from "./pages/Register";
@@ -18,7 +18,6 @@ import Shop from "./pages/user/Shop";
 function App() {
   return (
     <>
-      {/* <div className="flex p-8 w-screen justify-center h-screen items-center"> */}
       <Router>
         <Routes>
           <Route path="*" element={<ErrorCard />} />
@@ -31,11 +30,10 @@ function App() {
           <Route path="/admin" component={< AdminDashboard />} />
           <Route path="/admin/products" component={<AdminProductList />} />
           <Route path="/admin/users" component={<UserManagement />} />
-          <Route path="/admin/orders" component={<OrderManagement />} />
+          <Route path="/admin/orders" element={<ManageOrders />} />
           <Route path="/admin/sales" component={<SalesReport />} />
         </Routes>
       </Router>
-      {/* </div> */}
     </>
   );
 }
