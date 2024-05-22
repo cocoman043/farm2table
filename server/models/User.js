@@ -1,4 +1,3 @@
-// TODO: Create User Schema
 import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
@@ -19,7 +18,8 @@ const UserSchema = new Schema({
     },
     userType: {
         type: String,
-        required: true
+        enum: ['Customer', 'Admin'],
+        default: 'Customer'
     }
 });
 
