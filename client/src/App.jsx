@@ -1,9 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ErrorCard from "./components/ErrorCard";
-import Table from "./components/Table";
-import ManageOrders from "./pages/ManageOrders";
-import TransactionCard from "./components/Transaction";
+// import Table from "./components/Table";
+// import ManageOrders from "./pages/ManageOrders";
+// import TransactionCard from "./components/Transaction";
 
 import Register from "./pages/Register";
 import Login from "./pages/Login";
