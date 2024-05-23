@@ -66,21 +66,21 @@ function Shop() {
       <div className="p-4 w-full flex flex-col items-center">
         <div className="max-w-[1440px] w-full text-md flex flex-col-reverse lg:flex-row">
           {/* Products */}
-          <div className="p-3 flex flex-col gap-5">
+          <div className="p-3 flex-1 flex flex-col gap-5">
             <h1 className="font-inter font-bold text-4xl">Product</h1>
 
             <div className="p-3 shadow-xl border-4 border-farmgreen rounded-2xl overflow-hidden grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-5">
 
               {products.map((product, index) => {
                 return (
-                  <ProductCard key={index} product={product} add={() => addToCart(product)} />
+                  <ProductCard key={index} product={product} onClick={() => addToCart(product)} button="Add to cart"/>
                 )
               })}
 
             </div>
           </div>
 
-          <div className="p-3 min-w-[450px] flex flex-col gap-5">
+          <div className="p-3 lg:min-w-[450px] flex flex-col gap-5">
             <h1 className="font-inter font-bold text-4xl">Cart</h1>
 
             <div className="shadow-xl border-4 border-farmgreen rounded-2xl overflow-hidden">

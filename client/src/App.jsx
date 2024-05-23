@@ -28,7 +28,7 @@ function App() {
           <Route path="/user/shop" element={<Shop />} />
           {/* Admin routes */}
           <Route path="/admin" component={< AdminDashboard />} />
-          <Route path="/admin/products" component={<AdminProductList />} />
+          <Route path="/admin/products" element={<AdminProductList />} />
           <Route path="/admin/users" component={<UserManagement />} />
           <Route path="/admin/orders" element={<ManageOrders />} />
           <Route path="/admin/sales" component={<SalesReport />} />
