@@ -87,8 +87,10 @@ const putProduct = async (req, res) => {
     const { id } = req.params;
     const { name, description, type, price, stock } = req.body;
 
+    console.log(id);
+    console.log(name, description, type, price, stock);
     // find the product using the id, and the new product
-    const product = await Product.findOneAndReplace(id, { name, description, type, price, stock });
+    const product = await Product.findByIdAndUpdate(id, { name, description, type, price, stock }, { new: true });
 
     if (product) {
       res.status(200).json(product);

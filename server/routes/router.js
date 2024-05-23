@@ -49,7 +49,7 @@ router.delete('/transaction/:id', deleteTransaction);
 router.get('/product', getProducts);
 router.get('/product/:id', getProduct);
 router.post('/product', postProduct);
-router.put('/product', putProduct); // WARN: MIGHT NOT BE NEEDED
+router.put('/product/:id', putProduct); // WARN: MIGHT NOT BE NEEDED
 router.delete('/product/:id', deleteProduct);
 
 router.get('/user', getUsers);
