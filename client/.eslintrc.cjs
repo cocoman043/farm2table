@@ -23,6 +23,6 @@ module.exports = {
   },
   rules: {
     'react/react-in-jsx-scope': 0,
-    'imports/extensions': 'none',
+    'imports/extensions': 0,
   },
 };
