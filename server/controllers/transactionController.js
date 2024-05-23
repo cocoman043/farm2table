@@ -1,4 +1,5 @@
 import Transaction from '../models/Transaction.js';
+import mongoose from 'mongoose';
 
 const getTransaction = async (req, res) => {
   try {
@@ -36,12 +37,43 @@ const getTransactions = async (req, res) => {
     const { product_id, order_id } = req.query;
 
     // if a product_id or order_id was requested, add it to the filter
-    if (product_id) filter.product_id = product_id;
-    if (order_id) filter.order_id = order_id;
 
+    if (product_id) filter.product_id = mongoose.Types.ObjectId.createFromHexString(product_id);
+    if (order_id) filter.order_id = mongoose.Types.ObjectId.createFromHexString(order_id);
+
+    console.log(filter);
+
+    // WARN: IMPLEMENT FIXED VERSION
     // find the transactions based on the filter
-    const transactions = await Transaction.find(filter);
+    const transactions = await
+      Transaction.aggregate([
+        {
+          $match: filter
+        },
+        {
+          $lookup: {
+            from: 'products', // The name of the Product collection in MongoDB
+            localField: 'product_id',
+            foreignField: '_id',
+            as: 'product_info'
+          }
+        },
+        {
+          $unwind: '$product_info'
+        },
+        {
+          $project: {
+            _id: 1,
+            product_name: '$product_info.name',
+            product_price: '$product_info.price',
+            quantity: 1,
+            order_id: 1
+          }
+        }
+      ]);
 
+
+    // const transactions = await Transaction.find(filter);
     if (transactions) {
       res.status(200).json(transactions);
     } else {

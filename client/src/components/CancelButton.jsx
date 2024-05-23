@@ -1,26 +1,30 @@
-function CancelButton({ id, status }) {
+function CancelButton({ id, status, updateTableData }) {
 
   const cancelOrder = async () => {
     try {
       const response = await fetch(`http://localhost:3000/order/${id}`, {
         method: 'PUT',
         headers: {
-          'Content-type': 'application/json',
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ status: 'cancelled' })
+        body: JSON.stringify({ status: 'cancelled' }),
       });
 
-      console.log('Successfully canceled order');
+      if (response.ok) {
+        console.log('Successfully canceled order');
+        updateTableData(id);
+      } else {
+        console.error('Failed to cancel order');
+      }
     } catch (error) {
       console.error(`An error occurred while cancelling the order: ${error.message}`);
     }
-  }
+  };
 
-
-  if (status == 'pending') {
-    return <button className="btn btn-error" onClick={cancelOrder}>Cancel</button>;
+  if (status === 'pending') {
+    return <button className="text-white btn btn-error" onClick={cancelOrder}>Cancel</button>;
   } else {
-    return <></>;
+    return null;
   }
 };
 
