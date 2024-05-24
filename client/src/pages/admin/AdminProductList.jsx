@@ -119,8 +119,6 @@ function AdminDashboard() {
 
         </div>
       </div>
-
-      
     </>
   );
 }
