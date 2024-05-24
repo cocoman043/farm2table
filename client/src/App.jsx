@@ -24,7 +24,7 @@ function App() {
           {/* User routes */}
           <Route path="/user/shop" element={<Shop />} />
           {/* Admin routes */}
-          <Route path="/admin" element={< AdminDashboard />} />
+          <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/products" element={<AdminProductList />} />
           <Route path="/admin/users" element={<UserManagement />} />
           <Route path="/admin/orders" element={<OrderManagement />} />
