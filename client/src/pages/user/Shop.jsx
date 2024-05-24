@@ -4,6 +4,7 @@ import Navbar from "../../components/UserNavbar"
 import ProductCard from "../../components/ProductCard"
 
 function Shop() {
+  const user_id = "6648cf1b008a6b2900b17099";
   const [products, setProducts] = useState([]);
   const [filter, setFilter] = useState("");
   const [carts, setCarts] = useState({});
@@ -30,9 +31,9 @@ function Shop() {
       const item = { ...newCarts[product.name] };
 
       if (newCarts.hasOwnProperty(product.name)) {
-        newCarts[product.name] = { unitprice: product.price, quantity: item.quantity + 1, total: item.total + product.price }
+        newCarts[product.name] = { product: product, quantity: item.quantity + 1, total: item.total + product.price }
       } else {
-        newCarts[product.name] = { unitprice: product.price, quantity: 1, total: product.price };
+        newCarts[product.name] = { product: product, quantity: 1, total: product.price };
       }
       return newCarts;
     });
@@ -47,18 +48,57 @@ function Shop() {
         if (newCarts[cart].quantity == 1) {
           delete newCarts[cart]
         } else {
-          newCarts[cart] = { unitprice: item.unitprice, quantity: item.quantity - 1, total: item.total - item.unitprice }
+          newCarts[cart] = { product: item.product, quantity: item.quantity - 1, total: item.total - item.product.price }
         }
       } else {
-        newCarts[cart] = { unitprice: item.unitprice, quantity: item.quantity + 1, total: item.total + item.unitprice }
+        newCarts[cart] = { product: item.product, quantity: item.quantity + 1, total: item.total + item.product.price }
       }
       return newCarts;
     });
   }
 
-  function checkout() {
+  const checkout = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ user_id })
+      });
+
+      var order = await response.json();
+      if (response.ok) {
+        console.log('Successfully added order');
+      } else {
+        console.error('Failed to add order');
+      }
+    } catch (error) {
+      console.error(`An error occurred while cancelling the order: ${error.message}`);
+    }
+
+
+    try {  
+      for (const key in carts) {
+        const item = carts[key]
+
+        const transaction = await fetch('http://localhost:3000/transaction', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ product_id: item.product, quantity: item.quantity, order_id: order._id })
+        });
+      
+        console.log('Successfully added transaction');
+      }
+
+    } catch (error) {
+      console.error(`An error occurred while adding the transaction: ${error.message}`);
+    }
+
     setCarts({});
-  }
+  };
 
   return (
     <>
@@ -141,7 +181,7 @@ function Shop() {
               </table>
             </div>
 
-            <button className="btn bg-farmgreen rounded-2xl text-lg text-white hover:bg-farmgreen" onClick={() => checkout()}>
+            <button className="btn bg-farmgreen rounded-2xl text-lg text-white hover:bg-farmgreen" onClick={checkout}>
               <FaShoppingCart />
               Checkout
             </button>

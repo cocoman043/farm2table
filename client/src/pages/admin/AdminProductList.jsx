@@ -25,8 +25,6 @@ function AdminDashboard() {
     getProducts();
   }, [filter])
 
-  
-
   const addProduct = async (event) => {
     event.preventDefault();
 
