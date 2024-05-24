@@ -1,5 +1,4 @@
 function AddProductModal({add}) {
-
     return(
         <dialog id="my_modal_3" className="modal">
             <div className="modal-box rounded-2xl">
@@ -27,6 +26,10 @@ function AddProductModal({add}) {
 
                 <label className="input input-bordered flex items-center gap-2">
                     <input type="number" name="stock" className="grow font-inter text-base" placeholder="Stock" required/>
+                </label>
+
+                <label className="input input-bordered flex items-center gap-2">
+                    <input type="text" name="img" className="grow font-inter text-base" placeholder="Image Link"/>
                 </label>
 
                 <button type="submit" className="self-end btn rounded-2xl bg-farmgreen w-full text-xl text-white flex hover:bg-farmgreen">     
