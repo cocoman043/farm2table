@@ -39,6 +39,11 @@ function EditProductModal({ product, edit }) {
                         <input type="number" name="stock" className="input input-bordered" placeholder="200" defaultValue={product.stock}/>
                     </label>
 
+                    <label className="flex flex-col font-inter text-base">
+                        Image Link
+                        <input type="text" name="img" className="input input-bordered" placeholder="https://cdn.britannica.com/94/151894-050-F72A5317/Brown-eggs.jpg" defaultValue={product.img}/>
+                    </label>
+
                     <button type="submit" className="self-end btn rounded-2xl bg-farmgreen w-full text-xl text-white flex hover:bg-farmgreen" onClick={()=>document.getElementById('my_modal_3').close()}>     
                         Submit
                     </button>

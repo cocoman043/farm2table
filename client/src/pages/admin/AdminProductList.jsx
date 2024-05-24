@@ -51,6 +51,7 @@ function AdminDashboard() {
     const type = event.target.type.value
     const price = event.target.price.value
     const stock = event.target.stock.value
+    const img = event.target.img.value
 
     try {
       const response = await fetch('http://localhost:3000/product', {
@@ -58,7 +59,7 @@ function AdminDashboard() {
         headers: {
           'Content-type': 'application/json',
         },
-        body: JSON.stringify({ name, description, type, price, stock })
+        body: JSON.stringify({ name, description, type, price, stock, img })
       });
 
       console.log('Successfully added product');
@@ -78,6 +79,7 @@ function AdminDashboard() {
     const type = event.target.type.value
     const price = event.target.price.value
     const stock = event.target.stock.value
+    const img = event.target.img.value
 
     try {
       const response = await fetch(`http://localhost:3000/product/${id}`, {
@@ -85,7 +87,7 @@ function AdminDashboard() {
         headers: {
           'Content-type': 'application/json',
         },
-        body: JSON.stringify({ name, description, type, price, stock })
+        body: JSON.stringify({ name, description, type, price, stock, img })
       });
 
       console.log('Successfully edited product');

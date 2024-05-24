@@ -19,9 +19,7 @@ const getProduct = async (req, res) => {
 
   } catch (error) {
     res.status(500).json({ error: error.message });
-  }
-  //   const product = await Product.findOne({ code: req.query.name })
-  //   res.send(product)
+  } res.send(product)
 };
 
 const getProducts = async (req, res) => {
@@ -53,15 +51,13 @@ const getProducts = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-  // const products = await Product.find({});
-  // res.send(products)
 };
 
 const postProduct = async (req, res) => {
   try {
-    const { name, description, type, price, stock } = req.body
+    const { name, description, type, price, stock, img } = req.body
 
-    const newProduct = Product.create({ name, description, type, price, stock })
+    const newProduct = Product.create({ name, description, type, price, stock, img })
 
     if (newProduct) {
       res.status(200).json(newProduct);
@@ -69,28 +65,17 @@ const postProduct = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
-  // const { name, desciption, type, price, stock } = req.body
-
-  // const newProduct = new Product({ name, desciption, type, price, stock })
-
-  // const result = await newProduct.save()
-
-  // if (result._id) {
-  //   res.send({ success: true })
-  // } else {
-  //   res.send({ success: false })
-  // }
 };
 
 const putProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, description, type, price, stock } = req.body;
+    const { name, description, type, price, stock, img } = req.body;
 
     console.log(id);
     console.log(name, description, type, price, stock);
     // find the product using the id, and the new product
-    const product = await Product.findByIdAndUpdate(id, { name, description, type, price, stock }, { new: true });
+    const product = await Product.findByIdAndUpdate(id, { name, description, type, price, stock, img }, { new: true });
 
     if (product) {
       res.status(200).json(product);
@@ -100,18 +85,6 @@ const putProduct = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
-  // const [prevProduct, newProduct] = req.body
-
-  // const result = Product.findOneAndUpdate(
-  //   prevProduct,
-  //   newProduct
-  // );
-
-  // if (result._id) {
-  //   res.send({ success: true })
-  // } else {
-  //   res.send({ success: false })
-  // }
 };
 
 const deleteProduct = async (req, res) => {
@@ -128,15 +101,6 @@ const deleteProduct = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-  // const { name } = req.body
-
-  // const result = await Subject.deleteOne({ name })
-
-  // if (result.deletedCount == 1) {
-  //   res.send({ success: true })
-  // } else {
-  //   res.send({ success: false })
-  // }
 };
 
 export {
