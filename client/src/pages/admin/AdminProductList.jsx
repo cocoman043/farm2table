@@ -12,22 +12,6 @@ function AdminDashboard() {
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const result = await fetch('http://localhost:3000/product');
-
-        const products = await result.json();
-        setProducts(products);
-        console.log(products);
-      } catch (error) {
-        console.error(`An error occured while fetching products: ${error.message}`);
-      }
-    };
-
-    getProducts();
-  }, [])
-
-  useEffect(() => {
-    const getProducts = async () => {
-      try {
         const result = await fetch(`http://localhost:3000/product?name=${filter}`);
 
         const products = await result.json();
