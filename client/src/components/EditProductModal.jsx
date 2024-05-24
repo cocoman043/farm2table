@@ -1,3 +1,5 @@
+import "./scrollbar.css"
+
 function EditProductModal({ product, edit }) {
     const editProduct = (event) => {
         edit(event, product._id);
@@ -5,7 +7,7 @@ function EditProductModal({ product, edit }) {
 
     return(
         <dialog id={product._id} className="modal">
-            <div className="modal-box rounded-2xl">
+            <div className="modal-box rounded-lg scrollbar">
                 <form method="dialog">
                     {/* if there is a button in form, it will close the modal */}
                     <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
@@ -13,7 +15,7 @@ function EditProductModal({ product, edit }) {
                     <h3 className="font-bold text-2xl">Edit Product</h3>
                 </form>
 
-                <form method="dialog" onSubmit={editProduct} className="mt-5 grid gap-5">
+                <form method="dialog" onSubmit={editProduct} className="mt-5 grid gap-3">
                     <label className="flex flex-col font-inter text-base">
                         Name
                         <input type="text" name="name" className="input input-bordered" placeholder="Eggplant" defaultValue={product.name}/>

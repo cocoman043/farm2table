@@ -1,7 +1,9 @@
+import "./scrollbar.css"
+
 function AddProductModal({add}) {
     return(
         <dialog id="my_modal_3" className="modal">
-            <div className="modal-box rounded-2xl">
+            <div className="modal-box rounded-lg scrollbar">
             <form method="dialog">
                 {/* if there is a button in form, it will close the modal */}
                 <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
