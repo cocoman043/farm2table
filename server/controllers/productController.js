@@ -35,7 +35,7 @@ const getProducts = async (req, res) => {
 
     // if a name was requested, add it to the filter
     if (name) {
-      filter.name = name;
+      filter.name = { $regex: name, $options: 'i' };
     }
 
     console.log(name)
