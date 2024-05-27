@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import logo from "../assets/logo2.png";
 
 function Register() {
     const [username, setUsername] = useState('');
@@ -38,58 +39,63 @@ function Register() {
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-farmgreen">
-            <div className="card bg-white shadow-xl max-w-md p-8">
-                <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Login</h2>
-                <form onSubmit={handleRegister}>
-                    {/* username */}
-                    <div className="mb-4">
-                        <label className="block text-gray-700 mb-2 font-bold" htmlFor="username">Username</label>
-                        <input
-                        type="text"
-                        id="username"
-                        className="w-full px-3 py-2 border-2 rounded-lg bg-white text-black focus:outline-none focus:ring-2 focus:ring-green-700"
-                        placeholder="John Doe"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
-                        />
-                    </div>
-                    {/* email */}
-                    <div className="mb-4">
-                        <label className="block text-gray-700 mb-2 font-bold" htmlFor="email">Email Address</label>
-                        <input
-                        type="email"
-                        id="email"
-                        className="w-full px-3 py-2 border-2 rounded-lg bg-white text-black focus:outline-none focus:ring-2 focus:ring-green-700"
-                        placeholder="jdoe@gmail.com"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                        />
-                    </div>
-                    {/* password */}
-                    <div className="mb-6">
-                        <label className="block text-gray-700 mb-2 font-bold" htmlFor="password">Password</label>
-                        <input
-                        type="password"
-                        id="password"
-                        className="w-full px-3 py-2 border-2 rounded-lg bg-white text-black focus:outline-none focus:ring-2 focus:ring-green-700"
-                        placeholder="********"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                        />
-                    </div>
-                    <div className="mt-4 text-center text-sm">
-                        <p className="text-gray-400">Have account? <a href="/login" className="text-green-700 font-bold hover:underline">Log in</a> here.</p>
-                    </div>
-                    <button
-                        type="submit"
-                        className="w-full bg-green-700 text-white py-2 rounded-lg hover:bg-farmgreen hover:text-black transition duration-300"
-                    >
-                        Sign up
-                    </button>
-                </form>
+            <div className="flex bg-white shadow-xl max-w-4xl rounded-lg overflow-hidden">
+                <div className="w-full md:w-1/2 p-8">
+                    <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Sign up</h2>
+                    <form onSubmit={handleRegister}>
+                        {/* username */}
+                        <div className="mb-4">
+                            <label className="block text-gray-700 mb-2 font-bold" htmlFor="username">Username</label>
+                            <input
+                            type="text"
+                            id="username"
+                            className="w-full px-3 py-2 border-2 rounded-lg bg-white text-black focus:outline-none focus:ring-2 focus:ring-green-700"
+                            placeholder="John Doe"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            required
+                            />
+                        </div>
+                        {/* email */}
+                        <div className="mb-4">
+                            <label className="block text-gray-700 mb-2 font-bold" htmlFor="email">Email Address</label>
+                            <input
+                            type="email"
+                            id="email"
+                            className="w-full px-3 py-2 border-2 rounded-lg bg-white text-black focus:outline-none focus:ring-2 focus:ring-green-700"
+                            placeholder="jdoe@gmail.com"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                            />
+                        </div>
+                        {/* password */}
+                        <div className="mb-6">
+                            <label className="block text-gray-700 mb-2 font-bold" htmlFor="password">Password</label>
+                            <input
+                            type="password"
+                            id="password"
+                            className="w-full px-3 py-2 border-2 rounded-lg bg-white text-black focus:outline-none focus:ring-2 focus:ring-green-700"
+                            placeholder="********"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                            />
+                        </div>
+                        <div className="mt-4 text-center text-sm">
+                            <p className="text-gray-400">Have account? <a href="/login" className="text-green-700 font-bold hover:underline">Log in</a> here.</p>
+                        </div>
+                        <button
+                            type="submit"
+                            className="w-full bg-green-700 text-white py-2 rounded-lg hover:bg-farmgreen hover:text-black transition duration-300"
+                        >
+                            Sign up
+                        </button>
+                    </form>
+                </div>
+                <div className="hidden md:block md:w-1/2 place-content-center">
+                    <img src={logo} alt="logo" className="object-cover w-full h-auto p-12" />
+                </div>
             </div>
         </div>
     );
