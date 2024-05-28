@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import logo from "../assets/logo2.png";
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-
+    const navigate = useNavigate();
+    
     const handleLogin = async (e) => {
         e.preventDefault();
-
+        
         if (!email || !password) {
             setError('Please fill in all fields.');
             return;
         }
-
+        
         try {
             const response = await fetch('/login', {
                 method: 'POST',
@@ -22,12 +24,13 @@ function Login() {
                 },
                 body: JSON.stringify({ email, password })
             });
-
+            
             const data = await response.json();
-
+            
             if (response.ok) {
                 console.log('Logged in successfully:', data);
-                // TODO: redirect user to products page
+                localStorage.setItem('token', data.token);
+                navigate('/user/shop');
             } else {
                 setError(data.message || 'Failed to log in.');
             }
