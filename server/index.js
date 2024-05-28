@@ -9,6 +9,8 @@ await mongoose.connect(process.env.MONGODB_URI, { dbName: 'farm2table' })
     console.log('Connected to MongoDB');
   });
 
+const JWT_SECRET = process.env.JWT_SECRET;
+
 const app = express();
 
 app.use(cors());

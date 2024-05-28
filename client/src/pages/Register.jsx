@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import logo from "../assets/logo2.png";
 
 function Register() {
@@ -6,7 +7,8 @@ function Register() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-
+    const navigate = useNavigate();
+    
     const handleRegister = async (e) => {
         e.preventDefault();
 
@@ -14,7 +16,7 @@ function Register() {
             setError('Please fill in all fields.');
             return;
         }
-
+        
         try {
             const response = await fetch('/register', {
                 method: 'POST',
@@ -23,12 +25,13 @@ function Register() {
                 },
                 body: JSON.stringify({ username, email, password })
             });
-
+            
             const data = await response.json();
-
+            
             if (response.ok) {
                 console.log('Registered successfully:', data);
-                // TODO: redirect user to products page
+                localStorage.setItem('token', data.token);
+                navigate('user/shop');
             } else {
                 setError(data.message || 'Failed to register.');
             }
