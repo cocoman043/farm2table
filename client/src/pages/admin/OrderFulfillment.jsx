@@ -3,7 +3,7 @@ import Table from "../../components/Table";
 import Navbar from "../../components/UserNavbar";
 import TransactionCard from "../../components/Transaction";
 
-function OrderManagement() {
+function OrderFulfillment() {
   const [tableData, setTableData] = useState([]);
   const [transactions, setTransactions] = useState([]);
   useEffect(() => {
@@ -49,4 +49,4 @@ function OrderManagement() {
   )
 };
 
-export default OrderManagement;
+export default OrderFulfillment;

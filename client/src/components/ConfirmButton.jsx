@@ -12,7 +12,7 @@ function ConfirmButton({ id, status, updateTableData }) {
 
       if (response.ok) {
         console.log('Successfully confirmed order');
-        updateTableData(id);
+        updateTableData(id, 'confirmed');
       } else {
         console.error('Failed to confirm order');
       }
