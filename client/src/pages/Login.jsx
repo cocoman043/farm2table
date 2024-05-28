@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from "../assets/logo2.png";
 
@@ -17,7 +17,7 @@ function Login() {
         }
         
         try {
-            const response = await fetch('/login', {
+            const response = await fetch('http://localhost:3000/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -26,11 +26,17 @@ function Login() {
             });
             
             const data = await response.json();
+            console.log(data);
             
             if (response.ok) {
                 console.log('Logged in successfully:', data);
                 localStorage.setItem('token', data.token);
-                navigate('/user/shop');
+
+                if (data.userType === 'admin') {
+                    navigate('/admin');
+                } else {
+                    navigate('/user/shop');
+                }
             } else {
                 setError(data.message || 'Failed to log in.');
             }
@@ -73,6 +79,9 @@ function Login() {
                         </div>
                         <div className="mt-4 text-center text-sm">
                             <p className="text-gray-400">No account? <a href="/register" className="text-green-700 font-bold hover:underline">Sign up</a> here.</p>
+                        </div>
+                        <div className="mt-4 text-center text-sm">
+                            {error && <p>{error}</p>}
                         </div>
                         <button
                             type="submit"

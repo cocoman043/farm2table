@@ -16,8 +16,12 @@ const AuthProvider = ({ children }) => {
     }, []);
 
     const fetchUser = async (token) => {
+        const tokenParts = token.split('.');
+        const payload = JSON.parse(atob(tokenParts[1]));
+        const userId = payload.id;
+
         try {
-            const response = await fetch('/get-user', {
+            const response = await fetch(`http://localhost:3000/user/${userId}`, {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${token}`

@@ -18,7 +18,7 @@ function Register() {
         }
         
         try {
-            const response = await fetch('/register', {
+            const response = await fetch('http://localhost:3000/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -31,7 +31,7 @@ function Register() {
             if (response.ok) {
                 console.log('Registered successfully:', data);
                 localStorage.setItem('token', data.token);
-                navigate('user/shop');
+                navigate('/user/shop');
             } else {
                 setError(data.message || 'Failed to register.');
             }
@@ -87,6 +87,9 @@ function Register() {
                         </div>
                         <div className="mt-4 text-center text-sm">
                             <p className="text-gray-400">Have account? <a href="/login" className="text-green-700 font-bold hover:underline">Log in</a> here.</p>
+                        </div>
+                        <div className="mt-4 text-center text-sm">
+                            {error && <p>{error}</p>}
                         </div>
                         <button
                             type="submit"
