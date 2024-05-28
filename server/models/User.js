@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const UserSchema = new Schema({
-    name: {
+    username: {
         type: String,
         required: true
     },
@@ -18,8 +18,8 @@ const UserSchema = new Schema({
     },
     userType: {
         type: String,
-        enum: ['Customer', 'Admin'],
-        default: 'Customer'
+        enum: ['user', 'admin'],
+        default: 'user'
     }
 });
 
