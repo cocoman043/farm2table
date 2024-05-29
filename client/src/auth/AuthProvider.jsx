@@ -1,61 +1,58 @@
-import { useEffect, useState, createContext } from "react";
-import { useNavigate } from 'react-router-dom';
-
+import { useContext, createContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [user, setUser] = useState(null);
-    const navigate = useNavigate();
+  const [userId, setUserId] = useState(localStorage.getItem("userId") || null);
+  const [userType, setUserType] = useState(localStorage.getItem("userType") || null);
+  const [token, setToken] = useState(localStorage.getItem("token") || "");
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            fetchUser(token);
-        }
-    }, []);
+  const loginAction = async (email, password) => {
+    try {
+      console.log('mema lang')
+      const response = await fetch("http://localhost:3000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-    const fetchUser = async (token) => {
-        const tokenParts = token.split('.');
-        const payload = JSON.parse(atob(tokenParts[1]));
-        const userId = payload.id;
+      const res = await response.json();
+      console.log(res);
 
-        try {
-            const response = await fetch(`http://localhost:3000/user/${userId}`, {
-                method: 'GET',
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            if (response.ok) {
-                const userData = await response.json();
-                setUser(userData);
-                setIsAuthenticated(true);
-            } else {
-                logout();
-            }
-        } catch (error) {
-            logout();
-        }
-    };
+      if (res) {
+        setUserId(res.id);
+        setToken(res.token);
+        setUserType(res.userType);
+        localStorage.setItem("token", res.token);
+        localStorage.setItem("userId", res.id);
+        localStorage.setItem("userType", res.userType);
+        navigate("/user/shop");
+        return;
+      }
+      throw new Error(res.message);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-    const login = (token) => {
-        localStorage.setItem('token', token);
-        fetchUser(token);
-    };
+  const logOut = () => {
+    setUserId(null);
+    setToken("");
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
 
-    const logout = () => {
-        localStorage.removeItem('token');
-        setUser(null);
-        setIsAuthenticated(false);
-        navigate('/login');
-    };
-
-    return (
-        <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
-            {children}
-        </AuthContext.Provider>
-    );
+  return <AuthContext.Provider value={{ token, userId, userType, loginAction, logOut }}>{children}</AuthContext.Provider>;
 };
 
-export { AuthProvider, AuthContext };
+export {
+  AuthProvider
+};
+
+export const useAuth = () => {
+  return useContext(AuthContext);
+};
+

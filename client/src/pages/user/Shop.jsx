@@ -4,7 +4,7 @@ import Navbar from "../../components/UserNavbar"
 import ProductCard from "../../components/ProductCard"
 
 function Shop() {
-  const user_id = "6648cf1b008a6b2900b17099";
+  const user_id = localStorage.getItem("userId");
   const [products, setProducts] = useState([]);
   const [filter, setFilter] = useState("");
   const [carts, setCarts] = useState({});
@@ -78,7 +78,7 @@ function Shop() {
     }
 
 
-    try {  
+    try {
       for (const key in carts) {
         const item = carts[key]
 
@@ -89,7 +89,7 @@ function Shop() {
           },
           body: JSON.stringify({ product_id: item.product, quantity: item.quantity, order_id: order._id })
         });
-      
+
         console.log('Successfully added transaction');
       }
 
@@ -111,7 +111,7 @@ function Shop() {
               <h1 className="flex-1 font-inter font-bold text-4xl">Product</h1>
               <label className="input input-bordered rounded-2xl flex-1 flex items-center gap-2">
                 <input id="search" type="text" className="grow" placeholder="Search" />
-                <button className="btn btn-sm btn-circle btn-ghost" onClick={() => {setFilter(document.getElementById("search").value)}}>
+                <button className="btn btn-sm btn-circle btn-ghost" onClick={() => { setFilter(document.getElementById("search").value) }}>
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path fillRule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clipRule="evenodd" /></svg>
                 </button>
               </label>
@@ -121,7 +121,7 @@ function Shop() {
 
               {products.map((product, index) => {
                 return (
-                  <ProductCard key={index} product={product} onClick={() => addToCart(product)} button="Add to cart"/>
+                  <ProductCard key={index} product={product} onClick={() => addToCart(product)} button="Add to cart" />
                 )
               })}
 
