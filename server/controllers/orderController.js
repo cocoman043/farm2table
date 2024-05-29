@@ -86,6 +86,7 @@ const postOrder = async (req, res) => {
 
     // instead of creating a new order using `new Order`, and then saving with order.save(),
     // Order.create does both in one line
+    console.log(user_id);
     const order = await Order.create({ user_id });
 
     if (order) {
