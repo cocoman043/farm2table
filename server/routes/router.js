@@ -6,6 +6,7 @@ import {
   postOrder,
   putOrder,
   deleteOrder,
+  salesReport,
 } from '../controllers/orderController.js';
 
 import {
@@ -35,6 +36,7 @@ import {
 import {
   register,
   login,
+  authUser,
 } from '../controllers/authController.js';
 
 const router = new express.Router();
@@ -65,5 +67,8 @@ router.delete('/user/:id', deleteUser);
 
 router.post("/register", register);
 router.post("/login", login);
+
+router.get("/authUser", authUser);
+router.get('/salesReport', salesReport);
 
 export default router;

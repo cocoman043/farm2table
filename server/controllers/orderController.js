@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import Order from '../models/Order.js';
 
 // GET /order/:id
@@ -134,10 +135,75 @@ const deleteOrder = async (req, res) => {
   }
 };
 
+
+const salesReport = async (req, res) => {
+  try {
+    let { startDate, endDate } = req.query;
+
+    startDate = new Date(startDate);
+    endDate = new Date();
+
+    const salesReport = await Order.aggregate([
+      {
+        $match: {
+          createdAt: {
+            $gte: startDate,
+            $lt: endDate
+          },
+          status: 'confirmed'
+        }
+      },
+      {
+        $lookup: {
+          from: 'transactions',
+          localField: '_id',
+          foreignField: 'order_id',
+          as: 'transactions'
+        }
+      },
+      {
+        $unwind: '$transactions'
+      },
+      {
+        $lookup: {
+          from: 'products',
+          localField: 'transactions.product_id',
+          foreignField: '_id',
+          as: 'product'
+        }
+      },
+      {
+        $unwind: '$product'
+      },
+      {
+        $group: {
+          _id: '$product._id',
+          profit: {
+            $sum: { $multiply: ['$transactions.quantity', '$product.price'] }
+          },
+          sold: {
+            $sum: "$transactions.quantity"
+          },
+          name: { $first: '$product.name' },
+          type: { $first: '$product.type' },
+          stock: { $first: '$product.stock' },
+          price: { $first: '$product.price' }
+        }
+      },
+    ]);
+
+    if (salesReport) {
+      res.status(200).json(salesReport);
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 export {
   getOrder,
   getOrders,
   postOrder,
   putOrder,
   deleteOrder,
+  salesReport
 };

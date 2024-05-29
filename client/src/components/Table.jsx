@@ -21,14 +21,14 @@ function Table({ tableData, setTableData, setTransactions, isAdmin }) {
     }
   };
 
-  const updateTableData = (id) => {
+  const updateTableData = (id, status) => {
     setTableData((prevData) => prevData.map((order) =>
-      order._id === id ? { ...order, status: 'cancelled' } : order
+      order._id === id ? { ...order, status } : order
     ));
   };
 
   return (
-    <div className="h-max card overflow-auto border-4 border-farmgreen">
+    <div className="shadow-lg h-max card overflow-auto border-4 border-farmgreen">
       < table className="bg-white text-neutral" >
         <thead className="bg-farmgreen rounded-3xl sticky top-0">
           <tr className="*:text-left *:p-4 *:text-xl">
