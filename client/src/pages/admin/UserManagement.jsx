@@ -9,7 +9,7 @@ function UserManagement() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3000/users');
+        const response = await fetch('http://localhost:3000/user');
         const users = await response.json();
         setTableData(users);
       } catch (error) {
@@ -19,6 +19,29 @@ function UserManagement() {
 
     fetchData();
   }, []);
+
+  const editUser = async (event, id) => {
+    event.preventDefault();
+
+    const name = event.target.name.value;
+    const userType = event.target.userType.value;
+
+    try {
+      const response = await fetch(`http://localhost:3000/user/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify({ name, description, type, price, stock, img })
+      });
+
+      console.log('Successfully edited user');
+    } catch (error) {
+      console.error(`An error occurred while editing the user: ${error.message}`);
+    }
+
+    document.getElementById(id).close()
+  }
 
   return (
     <div>

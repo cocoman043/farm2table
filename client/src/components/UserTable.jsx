@@ -18,11 +18,11 @@ function UserTable({ tableData, setTableData }) {
         const formData = new FormData(event.target);
         const updatedUser = {
             name: formData.get("name"),
-            permissions: formData.get("type"),
+            userType: formData.get("userType"),
         };
 
         try {
-        const response = await fetch(`http://localhost:3000/users/${id}`, {
+        const response = await fetch(`http://localhost:3000/user/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ function UserTable({ tableData, setTableData }) {
 
     const handleDelete = async (id) => {
         try {
-            const response = await fetch(`http://localhost:3000/users/${id}`, {
+            const response = await fetch(`http://localhost:3000/user/${id}`, {
                 method: 'DELETE',
             });
 
@@ -69,31 +69,25 @@ function UserTable({ tableData, setTableData }) {
                     <th>User ID</th>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>Permissions</th>
-                    <th>Date Created</th>
-                    <th></th>
+                    <th>User Type</th>
+                    {/* <th></th> */}
                     <th></th>
                 </tr>
                 </thead>
                 <tbody className="h-96 overflow-auto">
                 {tableData.map((data, index) => {
-                    const date = new Date(data.createdAt);
-                    const day = date.getDate();
-                    const month = date.toLocaleString('default', { month: 'long' });
-                    const year = date.getFullYear();
 
                     return (
                     <tr key={index} className="even:bg-neutral-200 *:p-4">
                         <td>{data._id}</td>
                         <td>{data.name}</td>
-                        <td>********</td>
+                        <td>{data.email}</td>
                         <td>
-                            <UserBadge status={data.permissions} />
+                            <UserBadge status={data.userType} />
                         </td>
-                        <td>{`${month} ${day}, ${year}`}</td>
-                        <td>
+                        {/* <td>
                             <EditButton onClick={() => handleEdit(data)} />
-                        </td>
+                        </td> */}
                         <td>
                             <DeleteButton onClick={() => handleDelete(data._id)} />
                         </td>

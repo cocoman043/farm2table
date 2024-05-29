@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import logo from "../assets/logo2.png";
+import { useAuth } from '../auth/AuthProvider.jsx';
 
 function Register() {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-    const navigate = useNavigate();
+    const { registerAction, error, setError } = useAuth();
     
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -18,25 +17,9 @@ function Register() {
         }
         
         try {
-            const response = await fetch('http://localhost:3000/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ username, email, password })
-            });
-            
-            const data = await response.json();
-            
-            if (response.ok) {
-                console.log('Registered successfully:', data);
-                localStorage.setItem('token', data.token);
-                navigate('/user/shop');
-            } else {
-                setError(data.message || 'Failed to register.');
-            }
+            await registerAction(username, email, password);
         } catch (err) {
-            setError('An error occurred. Please try again later.');
+            setError('Failed to register. Please try again.');
         }
     };
 

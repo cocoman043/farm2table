@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import logo from "../assets/logo2.png";
 import { useAuth } from '../auth/AuthProvider.jsx';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const navigate = useNavigate();
+  const { loginAction, error, setError } = useAuth();
 
-  const auth = useAuth();
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -18,7 +15,11 @@ function Login() {
       return;
     }
 
-    auth.loginAction(email, password);
+    try {
+      await loginAction(email, password);
+    } catch (err) {
+      setError('Failed to log in. Please try again.');
+    }
   };
 
   return (
