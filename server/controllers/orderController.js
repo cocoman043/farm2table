@@ -39,12 +39,11 @@ const getOrders = async (req, res) => {
     //   GET /order?status=confirmed
     //   GET /order?status=cancelled
     //   GET /order -> this will return all orders regardless of status
-    const { status } = req.query;
+    const { status, user_id } = req.query;
 
     // if a status was requested, add it to the filter
-    if (status) {
-      filter.status = status;
-    }
+    if (status) filter.status = status;
+    if (user_id) filter.user_id = user_id;
 
     // find the orders based on the filter, ordered by status (descending kaya may -1)
     const orders = await Order.find(filter).sort({ status: -1 });
