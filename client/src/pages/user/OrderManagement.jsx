@@ -6,10 +6,12 @@ import TransactionCard from "../../components/Transaction";
 function OrderManagement() {
   const [tableData, setTableData] = useState([]);
   const [transactions, setTransactions] = useState([]);
+  // WARN: Fix without using local storage
+  const [userId, setUserId] = useState(localStorage.getItem("userId"));
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3000/order');
+        const response = await fetch(`http://localhost:3000/order?user_id=${userId}`);
 
         const orders = await response.json();
         setTableData(orders);
@@ -30,14 +32,14 @@ function OrderManagement() {
     <div>
       < Navbar />
       <div className="flex w-full p-16 justify-center text-black overflow-scroll">
-        <div className="flex-row justify-center">
+        <div className="flex-row justify-center max-w-[1440px] w-full">
           <div className="text-3xl font-bold">Manage Orders</div>
           <div className="flex gap-2 min-w-max">
             <Table tableData={tableData} setTableData={setTableData} setTransactions={setTransactions} isAdmin={false} />
             <div className="w-[26.5rem] overflow-auto hidden xl:flex gap-2 card items-center bg-white border-4 border-farmgreen p-4">
               {transactions.length == 0 && <div>Click an order to preview</div>}
               {transactions.map((item, index) => {
-                return <TransactionCard name={item.product_name} price={item.product_price} quantity={item.quantity} />
+                return <TransactionCard img={item.product_image} name={item.product_name} price={item.product_price} quantity={item.quantity} />
               }
               )}
             </div>

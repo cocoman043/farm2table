@@ -43,8 +43,6 @@ const getTransactions = async (req, res) => {
 
     console.log(filter);
 
-    // WARN: IMPLEMENT FIXED VERSION
-    // find the transactions based on the filter
     const transactions = await
       Transaction.aggregate([
         {
@@ -66,6 +64,7 @@ const getTransactions = async (req, res) => {
             _id: 1,
             product_name: '$product_info.name',
             product_price: '$product_info.price',
+            product_image: '$product_info.img',
             quantity: 1,
             order_id: 1
           }
