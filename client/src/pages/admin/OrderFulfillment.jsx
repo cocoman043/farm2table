@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Table from "../../components/Table";
-import Navbar from "../../components/UserNavbar";
 import TransactionCard from "../../components/Transaction";
+import Navbar from "../../components/AdminNavbar";
 
 function OrderFulfillment() {
   const [tableData, setTableData] = useState([]);
@@ -28,16 +28,16 @@ function OrderFulfillment() {
 
   return (
     <div>
-      < Navbar />
+      <Navbar />
       <div className="flex w-full p-16 justify-center text-black overflow-scroll">
-        <div className="flex-row justify-center">
+        <div className="max-w-[1440px] w-full flex-row justify-center">
           <div className="text-3xl font-bold">Fulfill Orders</div>
-          <div className="flex gap-2 min-w-max">
+          <div className="flex gap-2">
             <Table tableData={tableData} setTableData={setTableData} setTransactions={setTransactions} isAdmin={true} />
             <div className="w-[26.5rem] overflow-auto hidden xl:flex gap-2 card items-center bg-white border-4 border-farmgreen p-4">
               {transactions.length == 0 && <div>Click an order to preview</div>}
               {transactions.map((item, index) => {
-                return <TransactionCard name={item.product_name} price={item.product_price} quantity={item.quantity} />
+                return <TransactionCard img={item.product_image} name={item.product_name} price={item.product_price} quantity={item.quantity} />
               }
               )}
             </div>
