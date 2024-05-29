@@ -25,7 +25,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
 
-            {/* <Route path="/user/shop" element={<Shop />} /> */}
+            <Route path="/user/shop" element={<Shop />} />
             {/* <Route path="/admin" element={<AdminDashboard />} /> */}
 
             {/* User routes */}
