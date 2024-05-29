@@ -31,10 +31,9 @@ function Navbar() {
             <div className="drawer-side z-10">
                 <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
                 <ul className="menu px-6 py-20 w-80 min-h-full bg-farmgreen font-inter font-bold text-2xl text-white">
-                {/* Sidebar content here */}
-                <li className="border-b-white border-b"><a className="px-6 h-16 flex items-center">Shop</a></li>
-                <li><a className="px-6 h-16 flex items-center">Orders</a></li>
-                
+                    {/* Sidebar content here */}
+                    <li className="border-b-white border-b"><a href="/user/shop" className="px-6 h-16 flex items-center">Shop</a></li>
+                    <li><a href="/user/orders" className="px-6 h-16 flex items-center">Orders</a></li>
                 </ul>
             </div>
         </div>
