@@ -24,8 +24,12 @@ function App() {
             {/* Login/Sign up routes */}
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+            
+            <Route path="/user/shop" element={<Shop />} />
+            <Route path="/admin" element={<AdminDashboard />} />
+
             {/* User routes */}
-            <Route path="/user/shop" element={
+            {/* <Route path="/user/shop" element={
               <ProtectedRoute allowedRoles={['user']}>
                 <Shop />
               </ProtectedRoute>
@@ -36,11 +40,11 @@ function App() {
               </ProtectedRoute>
             } />
             {/* Admin routes */}
-            <Route path="/admin" element={
+            {/* <Route path="/admin" element={
               <ProtectedRoute allowedRoles={['admin']}>
                 <AdminDashboard />
               </ProtectedRoute>
-            } />
+            } /> */}
             <Route path="/admin/products" element={
               <ProtectedRoute allowedRoles={['admin']}>
                 <AdminProductList />
