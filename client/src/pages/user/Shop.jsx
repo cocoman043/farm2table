@@ -16,14 +16,13 @@ function Shop() {
 
         const products = await result.json();
         setProducts(products);
-        console.log(products);
       } catch (error) {
         console.error(`An error occured while fetching products: ${error.message}`);
       }
     };
 
     getProducts();
-  }, [filter])
+  }, [filter]);
 
   function addToCart(product) {
     setCarts(prevCarts => {
@@ -58,6 +57,11 @@ function Shop() {
   }
 
   const checkout = async () => {
+    const order = await postOrder();
+    const transaction = await postTransaction(order);
+  };
+
+  const postOrder = async () => {
     try {
       const response = await fetch('http://localhost:3000/order', {
         method: 'POST',
@@ -70,35 +74,73 @@ function Shop() {
       var order = await response.json();
       if (response.ok) {
         console.log('Successfully added order');
+        return order;
       } else {
         console.error('Failed to add order');
+        return null;
       }
     } catch (error) {
-      console.error(`An error occurred while cancelling the order: ${error.message}`);
+      console.error(`An error occurred while adding the order: ${error.message}`);
+      return null;
     }
+  }
 
-
+  const postTransaction = async (order) => {
     try {
       for (const key in carts) {
         const item = carts[key]
 
-        const transaction = await fetch('http://localhost:3000/transaction', {
+        if(item.product.stock < item.quantity)
+          continue;
+
+        const response = await fetch('http://localhost:3000/transaction', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ product_id: item.product, quantity: item.quantity, order_id: order._id })
+          body: JSON.stringify({ product_id: item.product._id, quantity: item.quantity, order_id: order._id })
         });
 
-        console.log('Successfully added transaction');
+        if (response.ok) {
+          console.log('Successfully added transaction');
+          deleteItem(key);
+          updateStock(item.product, item.quantity);
+        } else {
+          console.error('Failed to add transaction');
+        }
       }
-
     } catch (error) {
       console.error(`An error occurred while adding the transaction: ${error.message}`);
     }
+  }
 
-    setCarts({});
-  };
+  const deleteItem = (key) => {
+    setCarts(prevCarts => {
+      const newCarts = { ...prevCarts };
+      delete newCarts[key];
+      return newCarts;
+    });
+  }
+
+  const updateStock = async (product, quantity) => {
+    try {
+      const response = await fetch(`http://localhost:3000/product/${product._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ stock: product.stock - quantity })
+      });
+
+      if (response.ok) {
+        console.log('Successfully updated product stock');
+      } else {
+        console.error('Failed to update product stock');
+      }
+    } catch (error) {
+      console.error(`An error occurred while updating the product stock: ${error.message}`);
+    }
+  }
 
   return (
     <>
