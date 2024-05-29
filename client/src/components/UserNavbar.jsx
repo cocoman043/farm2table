@@ -9,19 +9,19 @@ function Navbar() {
     const [user, setUser] = useState("User");
 
     useEffect(() => {
-        const getUser = async () => {
-          try {
-            const result = await fetch(`http://localhost:3000/user/${userId}`);
-    
-            const user = await result.json();
-            setUser(user.name);
-          } catch (error) {
-            console.error(`An error occured while fetching the user: ${error.message}`);
-          }
-        };
-    
-        getUser();
-      }, []);
+      const getUser = async () => {
+        try {
+          const result = await fetch(`http://localhost:3000/user/${userId}`);
+  
+          const user = await result.json();
+          setUser(user.name);
+        } catch (error) {
+          console.error(`An error occured while fetching the user: ${error.message}`);
+        }
+      };
+  
+      getUser();
+    }, []);
 
     return (
       <>

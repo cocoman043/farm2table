@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import { useIsMount } from '../../components/FirstRender';
 import { FaShoppingCart } from "react-icons/fa";
 import Navbar from "../../components/UserNavbar"
 import ProductCard from "../../components/ProductCard"
@@ -8,6 +9,7 @@ function Shop() {
   const [products, setProducts] = useState([]);
   const [filter, setFilter] = useState("");
   const [carts, setCarts] = useState({});
+  const firstRender = useIsMount();
 
   useEffect(() => {
     const getProducts = async () => {
@@ -23,6 +25,52 @@ function Shop() {
 
     getProducts();
   }, [filter]);
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const result = await fetch(`http://localhost:3000/user/${user_id}`);
+
+        const user = await result.json();
+        if(user.cart != null || user.cart != undefined)
+          setCarts(user.cart);
+
+        console.log("get cart: ", carts);
+      } catch (error) {
+        console.error(`An error occured while fetching user cart: ${error.message}`);
+      }
+    };
+
+    getUser();
+  }, []);
+
+  useEffect(() => {
+    const putUser = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/user/${user_id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ cart: carts })
+        });
+  
+        if (response.ok) {
+          console.log('Successfully updated user cart');
+        } else {
+          console.error('Failed to update user cart');
+        }
+      } catch (error) {
+        console.error(`An error occurred while updating user cart: ${error.message}`);
+      }
+    };
+
+    if (firstRender) {
+      console.log("first render")
+    } else {
+      putUser();
+    }
+  }, [carts]);
 
   function addToCart(product) {
     setCarts(prevCarts => {
