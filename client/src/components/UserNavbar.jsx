@@ -1,7 +1,28 @@
+import { useState, useEffect } from "react";
 import { FaBars, FaUserCircle, FaSignOutAlt } from "react-icons/fa";
 import logo from "../assets/logo1.png";
+import { useAuth } from '../auth/AuthProvider.jsx';
 
 function Navbar() {
+    const auth = useAuth();
+    const userId = localStorage.getItem("userId");
+    const [user, setUser] = useState("User");
+
+    useEffect(() => {
+        const getUser = async () => {
+          try {
+            const result = await fetch(`http://localhost:3000/user/${userId}`);
+    
+            const user = await result.json();
+            setUser(user.name);
+          } catch (error) {
+            console.error(`An error occured while fetching the user: ${error.message}`);
+          }
+        };
+    
+        getUser();
+      }, []);
+
     return (
       <>
         <div className="drawer">
@@ -17,11 +38,11 @@ function Navbar() {
                             <img src={logo} className="h-5"></img>
                         </div>
                         <div className="flex-none flex items-center gap-2">
-                            <button className="btn btn-square btn-ghost">
-                                <FaUserCircle className="text-2xl"/>
-                            </button>
-                            <p className="font-inter font-bold text-xl tracking-wide hidden md:flex">Christian</p>
-                            <button className="btn btn-square btn-ghost hidden md:flex">
+                            {/* <button className="btn btn-square btn-ghost"> */}
+                                <FaUserCircle className="mr-2 text-2xl"/>
+                            {/* </button> */}
+                            <p className="font-inter font-bold text-xl tracking-wide hidden md:flex">{ user.toUpperCase() }</p>
+                            <button className="btn btn-square btn-ghost hidden md:flex" onClick={() => auth.logOut()}>
                                 <FaSignOutAlt className="text-2xl"/>
                             </button>
                         </div>
