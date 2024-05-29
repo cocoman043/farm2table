@@ -9,9 +9,10 @@ import Login from "./pages/Login";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminProductList from "./pages/admin/AdminProductList";
 import UserManagement from "./pages/admin/UserManagement";
-import OrderManagement from "./pages/admin/OrderManagement";
 import SalesReport from "./pages/admin/SalesReport";
 import Shop from "./pages/user/Shop";
+import OrderFulfillment from "./pages/admin/OrderFulfillment";
+import OrderManagement from "./pages/user/OrderManagement";
 
 function App() {
   return (
@@ -32,7 +33,12 @@ function App() {
               <ProtectedRoute allowedRoles={['user']}>
                 <Shop />
               </ProtectedRoute>
-            } /> */}
+            } />
+            <Route path="/user/orders" element={
+              <ProtectedRoute allowedRoles={['user']}>
+                <OrderManagement />
+              </ProtectedRoute>
+            } />
             {/* Admin routes */}
             {/* <Route path="/admin" element={
               <ProtectedRoute allowedRoles={['admin']}>
@@ -51,7 +57,7 @@ function App() {
             } />
             <Route path="/admin/orders" element={
               <ProtectedRoute allowedRoles={['admin']}>
-                <OrderManagement />
+                < OrderFulfillment />
               </ProtectedRoute>
             } />
             <Route path="/admin/sales" element={
@@ -62,7 +68,7 @@ function App() {
           </Routes >
         </AuthProvider>
       </Router >
-    </div>
+    </div >
   );
 }
 

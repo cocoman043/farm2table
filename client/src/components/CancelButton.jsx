@@ -12,7 +12,7 @@ function CancelButton({ id, status, updateTableData }) {
 
       if (response.ok) {
         console.log('Successfully canceled order');
-        updateTableData(id);
+        updateTableData(id, 'cancelled');
       } else {
         console.error('Failed to cancel order');
       }

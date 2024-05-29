@@ -57,7 +57,27 @@ const login = async (req, res) => {
     }
 };
 
+const authUser = async (req, res) => {
+  try {
+    const { Authorization } = req.headers;
+    const token = Authorization.split(' ')[1];
+
+    const { id } = jwt.verify(token, process.env.JWT_SECRET);
+
+    const user = await User.findById(id);
+
+    if (user) {
+      res.status(200).json(user);
+    } else {
+      res.status(200).send('User not found');
+    }
+  } catch (error) {
+    res.status(500).send(`Error during user authentication. ${error.message}`);
+  }
+}
+
 export {
-    register,
-    login
+  register,
+  login,
+  authUser
 };
