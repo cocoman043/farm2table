@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import 'dotenv/config.js';
 import cors from 'cors';
 
-await mongoose.connect(process.env.MONGODB_URI, { dbName: 'farm2table' })
+await mongoose.connect(process.env.MONGODB_URI, { dbName: 'farm2table_v2' })
   .then(() => {
     console.log('Connected to MongoDB');
   });
