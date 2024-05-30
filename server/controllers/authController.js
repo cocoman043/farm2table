@@ -23,8 +23,10 @@ const register = async (req, res) => {
 
         // Generate JWT token
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const id = user.id;
+        const userType = user.userType;
 
-        res.status(201).json({ message: "User registered", token });
+        res.status(201).json({ message: "User registered", id, userType, token });
     } catch (error) {
         console.error('Error registering user:', error);
         res.status(400).json({ message: "Error registering user.", error: error.message });
@@ -59,22 +61,30 @@ const login = async (req, res) => {
 
 const authUser = async (req, res) => {
   try {
-    const { Authorization } = req.headers;
-    const token = Authorization.split(' ')[1];
+    const { authorization } = req.headers;
+
+    if (!authorization) {
+      return res.status(401).send('Authorization header is missing');
+    }
+
+    const token = authorization.split(' ')[1];
+
+    if (!token) {
+      return res.status(401).send('Token is missing');
+    }
 
     const { id } = jwt.verify(token, process.env.JWT_SECRET);
-
     const user = await User.findById(id);
 
     if (user) {
       res.status(200).json(user);
     } else {
-      res.status(200).send('User not found');
+      res.status(404).send('User not found');
     }
   } catch (error) {
     res.status(500).send(`Error during user authentication. ${error.message}`);
   }
-}
+};
 
 export {
   register,

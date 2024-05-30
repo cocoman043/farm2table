@@ -57,7 +57,7 @@ function Navbar() {
                     <li className="border-b-white border-b"><a href="/admin/users" className="px-6 h-16 flex items-center">Users</a></li>
                     <li className="border-b-white border-b"><a href="/admin/products" className="px-6 h-16 flex items-center">Products</a></li>
                     <li className="border-b-white border-b"><a href="/admin/orders" className="px-6 h-16 flex items-center">Orders</a></li>
-                    <li><a className="px-6 h-16 flex items-center">Sales</a></li>
+                    <li className="border-b-white border-b"><a href="/admin/sales" className="px-6 h-16 flex items-center">Sales</a></li>
                 </ul>
             </div>
         </div>
