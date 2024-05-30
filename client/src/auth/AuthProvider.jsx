@@ -13,14 +13,14 @@ const AuthProvider = ({ children }) => {
   const refreshToken = async (token) => {
     try {
       console.log('refreshing...')
-      
+
       const response = await fetch("http://localhost:3000/authUser", {
         method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
-          },
-        });
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+      });
 
       const res = await response.json();
       console.log("hi");
@@ -80,10 +80,10 @@ const AuthProvider = ({ children }) => {
         // localStorage.setItem("userType", res.userType);
         if (res.userType == "user") {
           navigate("/user/shop");
-        } else if (res.userType == "admin" ) {
+        } else if (res.userType == "admin") {
           navigate("/admin");
         }
-        
+
         return;
       }
       throw new Error(res.message || 'Failed to log in.');
@@ -93,14 +93,14 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  const registerAction = async (username, email, password) => {
+  const registerAction = async (name, email, password) => {
     try {
       const response = await fetch("http://localhost:3000/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, email, password }),
+        body: JSON.stringify({ name, email, password }),
       });
 
       const res = await response.json();
